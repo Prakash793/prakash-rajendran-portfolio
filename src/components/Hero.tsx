@@ -1,252 +1,274 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { 
-  FileText, 
-  ArrowRight, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Award, 
-  CheckCircle2, 
-  Building2, 
+  Play, 
   Sparkles, 
+  Award, 
+  Terminal, 
+  Cpu, 
+  ShieldCheck, 
+  FileText, 
+  Mail, 
+  Layers, 
+  ArrowRight,
   TrendingUp,
   Globe2,
-  ExternalLink
+  CheckCircle2,
+  Zap,
+  RotateCw,
+  Phone
 } from 'lucide-react';
 import LinkedInIcon from '@/components/icons/LinkedInIcon';
 import GitHubIcon from '@/components/icons/GitHubIcon';
 import { personalData } from '@/data/portfolio';
+import { soundFx } from '@/utils/sound';
 
 export default function Hero() {
+  const [isPlayingIntro, setIsPlayingIntro] = useState(false);
+  const [activePersona, setActivePersona] = useState<'cyber' | 'executive'>('cyber');
+
+  const handlePlayIntro = () => {
+    soundFx.playChime();
+    setIsPlayingIntro(!isPlayingIntro);
+  };
+
   return (
-    <section id="home" className="relative min-h-screen pt-28 pb-20 flex items-center overflow-hidden radial-gradient-mesh">
-      {/* Background Decorative Rings & Ambient Lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 -left-48 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 -right-48 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none" />
+    <section id="home" className="relative min-h-[96vh] pt-20 pb-12 flex flex-col justify-between overflow-hidden bg-[#04060a] select-none">
+      
+      {/* 1. SEAMLESS WIDE 16:9 CHARACTER BANNER (FULL VISIBILITY - NO CROPPING) */}
+      <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center">
+        <div className="relative w-full h-full max-w-7xl mx-auto flex items-center justify-center">
+          <Image
+            src={activePersona === 'cyber' ? '/prakash-cyberpunk-banner.jpg' : '/prakash-executive-banner.jpg'}
+            alt="Prakash Rajendran"
+            fill
+            priority
+            sizes="100vw"
+            className="object-contain object-center transition-all duration-700 [mask-image:radial-gradient(ellipse_at_center,black_70%,transparent_98%)]"
+          />
+          {/* Edge gradient blending to guarantee smooth dark transitions */}
+          <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#04060a] to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#04060a] to-transparent" />
+          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#04060a] to-transparent" />
+          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#04060a] to-transparent" />
+        </div>
+      </div>
 
-      {/* Swiss / Viewfinder Editorial Crosshairs */}
-      <div className="hidden lg:block absolute top-28 left-8 text-slate-700 font-mono text-xs select-none pointer-events-none">
-        + 01 // ARCHIVE_INIT
-      </div>
-      <div className="hidden lg:block absolute top-28 right-8 text-slate-700 font-mono text-xs select-none pointer-events-none">
-        TAMIL NADU, IN +
-      </div>
-      <div className="hidden lg:block absolute bottom-10 left-8 text-slate-700 font-mono text-xs select-none pointer-events-none">
-        + SONY_TYPE_II // 2026
-      </div>
-      <div className="hidden lg:block absolute bottom-10 right-8 text-slate-700 font-mono text-xs select-none pointer-events-none">
-        99.8%_SLA +
-      </div>
+      {/* Grid Pattern Mesh */}
+      <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:28px_28px] opacity-20 pointer-events-none z-0" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      {/* 2. TOP HUD EVALUATION BAR */}
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 relative z-20">
+        <div className="flex items-start justify-between">
           
-          {/* Left Column: Personal Introduction & Brand Identity */}
-          <div className="lg:col-span-7 space-y-6 text-left">
-            {/* Status Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-semibold backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Available for Executive & CRE Leadership Roles</span>
+          {/* Left: Interactive "MY PORTFOLIO" Suite Card */}
+          <div className="flex items-center gap-3">
+            {/* Tech Matrix Dots */}
+            <div className="hidden sm:grid grid-cols-3 gap-1 opacity-70">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-700" />
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-700" />
             </div>
 
-            {/* Main Name & Title */}
-            <div className="space-y-2">
-              <h1 className="text-4xl sm:text-5xl xl:text-6xl font-extrabold tracking-tight text-white">
-                Hi, I&apos;m <span className="gold-gradient-text">{personalData.name}</span>
-              </h1>
-              <p className="text-lg sm:text-xl font-medium text-amber-400/90 flex items-center gap-2 flex-wrap">
-                <Building2 className="w-5 h-5 text-amber-400 flex-shrink-0" />
-                <span>{personalData.title}</span>
-                <span className="text-slate-500 hidden sm:inline">|</span>
-                <span className="text-slate-300 text-base">{personalData.division}</span>
-              </p>
+            {/* Vertical "MY PORTFOLIO" Tag */}
+            <div className="hidden sm:block text-[10px] font-mono tracking-widest text-slate-400 uppercase [writing-mode:vertical-lr] rotate-180 py-1 font-semibold">
+              MY PORTFOLIO
             </div>
 
-            {/* Professional Headline */}
-            <div className="border-l-2 border-amber-500/60 pl-4 py-1">
-              <p className="text-xl sm:text-2xl font-semibold text-slate-100 tracking-tight leading-snug">
-                {personalData.tagline}
-              </p>
-            </div>
-
-            {/* Personal Introduction Paragraph */}
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl">
-              {personalData.summary}
-            </p>
-
-            {/* Focus Pillars */}
-            <div className="flex flex-wrap gap-2 pt-1">
-              {[
-                'Multilingual Lease Abstraction',
-                '99.8% SLA Governance',
-                'Commercial Real Estate (CRE)',
-                'Claude Code & AI Automation',
-                'CAM Audit & Complex Covenants',
-              ].map((pill, idx) => (
-                <span
-                  key={idx}
-                  className="px-3 py-1 text-xs font-medium rounded-md bg-slate-800/80 text-slate-300 border border-slate-700/60 flex items-center gap-1.5"
-                >
-                  <Sparkles className="w-3 h-3 text-amber-400" />
-                  {pill}
-                </span>
-              ))}
-            </div>
-
-            {/* Action Buttons & Socials */}
-            <div className="flex flex-wrap items-center gap-4 pt-4">
-              <a
-                href={personalData.resumeUrl}
-                download
-                className="flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-bold text-slate-950 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-lg shadow-amber-500/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <FileText className="w-4 h-4" />
-                Download Resume (PDF)
-              </a>
-
-              <a
-                href="#projects"
-                className="flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-white bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/80 hover:border-slate-500 transition-all hover:scale-[1.02] active:scale-[0.98]"
-              >
-                Explore My Work
-                <ArrowRight className="w-4 h-4 text-amber-400" />
-              </a>
-
-              {/* Social Icons */}
-              <div className="flex items-center gap-2.5 sm:ml-2">
-                <a
-                  href={personalData.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-xl bg-slate-800/80 hover:bg-amber-500/10 hover:text-amber-400 text-slate-300 border border-slate-700/80 hover:border-amber-500/40 transition-all"
-                  aria-label="Prakash Rajendran GitHub Profile"
-                  title="GitHub @Prakash793"
-                >
-                  <GitHubIcon className="w-4 h-4" />
-                </a>
-                <a
-                  href={personalData.linkedinUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-xl bg-slate-800/80 hover:bg-amber-500/10 hover:text-amber-400 text-slate-300 border border-slate-700/80 hover:border-amber-500/40 transition-all"
-                  aria-label="Prakash Rajendran LinkedIn Profile"
-                  title="LinkedIn Profile"
-                >
-                  <LinkedInIcon className="w-4 h-4" />
-                </a>
-                <a
-                  href={`mailto:${personalData.email}`}
-                  className="p-3 rounded-xl bg-slate-800/80 hover:bg-amber-500/10 hover:text-amber-400 text-slate-300 border border-slate-700/80 hover:border-amber-500/40 transition-all"
-                  aria-label="Email Prakash Rajendran"
-                >
-                  <Mail className="w-4 h-4" />
-                </a>
-                <a
-                  href={`tel:${personalData.phoneRaw}`}
-                  className="p-3 rounded-xl bg-slate-800/80 hover:bg-amber-500/10 hover:text-amber-400 text-slate-300 border border-slate-700/80 hover:border-amber-500/40 transition-all"
-                  aria-label="Call Prakash Rajendran"
-                >
-                  <Phone className="w-4 h-4" />
-                </a>
+            {/* Suit Avatar & Play Intro Card */}
+            <div className="relative p-2 sm:p-2.5 rounded-2xl bg-slate-950/85 border border-cyan-400/50 backdrop-blur-xl shadow-xl shadow-cyan-500/10 flex items-center gap-3">
+              <div className="absolute -top-1 -left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-cyan-400" />
+              <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-cyan-400" />
+              
+              <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-xl overflow-hidden border border-cyan-400/40 relative flex-shrink-0 bg-slate-900 shadow-md">
+                <Image
+                  src="/prakash-rajendran-hd.jpg"
+                  alt={personalData.name}
+                  fill
+                  className="object-cover object-top"
+                />
               </div>
-            </div>
 
-            {/* Quick Details / Location */}
-            <div className="pt-2 flex items-center gap-6 text-xs text-slate-400">
-              <span className="flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-amber-400" />
-                {personalData.location}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Building2 className="w-3.5 h-3.5 text-amber-400" />
-                RECAM SOLUTIONS PVT LTD
-              </span>
+              <button
+                onClick={handlePlayIntro}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/30 border border-cyan-400/60 text-cyan-300 text-[11px] font-mono font-bold tracking-wider uppercase transition-all hover:scale-105 active:scale-95 shadow-sm"
+              >
+                <Play className="w-3 h-3 fill-cyan-400 text-cyan-400" />
+                <span>{isPlayingIntro ? 'AUDIO LIVE' : 'PLAY INTRO'}</span>
+              </button>
             </div>
           </div>
 
-          {/* Right Column: Premium Photo & Credential Card */}
-          <div className="lg:col-span-5 flex flex-col items-center lg:items-end">
-            <div className="relative w-full max-w-md">
-              {/* Glow Frame */}
-              <div className="absolute -inset-1.5 bg-gradient-to-tr from-amber-500/40 via-amber-400/20 to-indigo-500/30 rounded-3xl blur-xl opacity-70 group-hover:opacity-100 transition duration-1000 animate-tilt" />
-
-              <div className="relative bg-slate-900/90 border border-white/10 rounded-3xl p-4 sm:p-5 shadow-2xl backdrop-blur-xl">
-                {/* Photo Container */}
-                <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-slate-950 border border-white/10 shadow-inner">
-                  <Image
-                    src={personalData.photoUrl}
-                    alt="Prakash Rajendran - Deputy Manager, Commercial Real Estate & Operations"
-                    fill
-                    priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover object-top hover:scale-105 transition-transform duration-700"
-                  />
-
-                  {/* Top Badge on Image */}
-                  <div className="absolute top-3 left-3 bg-slate-950/85 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
-                    <Award className="w-4 h-4 text-amber-400" />
-                    <span className="text-[11px] font-semibold text-slate-200">
-                      Claude Certified (Anthropic)
-                    </span>
-                  </div>
-
-                  {/* Gradient Bottom Overlay */}
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent p-5 flex flex-col justify-end">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-white font-bold text-lg leading-tight">Prakash Rajendran</p>
-                        <p className="text-amber-400 text-xs font-medium">Deputy Manager · Operations</p>
-                      </div>
-                      <div className="bg-amber-500/20 border border-amber-500/40 text-amber-300 px-2.5 py-1 rounded-md text-[11px] font-bold">
-                        8+ Yrs Exp
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Floating Metric Badges beneath image */}
-                <div className="grid grid-cols-2 gap-3 mt-4">
-                  <div className="bg-slate-950/60 border border-white/5 rounded-xl p-3 text-left">
-                    <div className="flex items-center gap-1.5 text-amber-400 text-xs font-semibold">
-                      <TrendingUp className="w-3.5 h-3.5" />
-                      SLA Performance
-                    </div>
-                    <div className="text-xl font-bold text-white mt-0.5">99.8%</div>
-                    <div className="text-[11px] text-slate-400">Institutional adherence</div>
-                  </div>
-
-                  <div className="bg-slate-950/60 border border-white/5 rounded-xl p-3 text-left">
-                    <div className="flex items-center gap-1.5 text-indigo-400 text-xs font-semibold">
-                      <Globe2 className="w-3.5 h-3.5" />
-                      Multilingual
-                    </div>
-                    <div className="text-xl font-bold text-white mt-0.5">Global</div>
-                    <div className="text-[11px] text-slate-400">Cross-border leases</div>
-                  </div>
-                </div>
+          {/* Right: Technical Designation & Giant Sci-Fi 01 */}
+          <div className="flex items-center gap-4 sm:gap-6 text-right">
+            <div className="hidden md:block space-y-1 text-right">
+              <div className="text-xs font-mono font-extrabold uppercase tracking-widest text-slate-200">
+                DEPUTY MANAGER · CRE OPERATIONS & AI
               </div>
+              <div className="text-[11px] font-mono text-slate-400 tracking-wider">
+                BUILDING SCALABLE SOLUTIONS WITH MODERN TECHNOLOGIES.
+              </div>
+            </div>
+
+            {/* Giant Sci-Fi 01 Frame */}
+            <div className="text-4xl sm:text-6xl font-black font-mono tracking-tighter text-slate-700/80 border border-white/10 px-4 py-1.5 rounded-2xl select-none backdrop-blur-md">
+              01
             </div>
           </div>
 
-        </div>
-
-        {/* Bottom Metrics Bar */}
-        <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-white/5">
-          {personalData.keyMetrics.map((metric, idx) => (
-            <div key={idx} className="glass-card glass-card-hover rounded-2xl p-4 sm:p-5 text-center">
-              <div className="text-2xl sm:text-3xl font-extrabold text-white gold-gradient-text">
-                {metric.value}
-              </div>
-              <div className="text-sm font-semibold text-slate-200 mt-1">{metric.label}</div>
-              <div className="text-xs text-slate-400 mt-0.5">{metric.helper}</div>
-            </div>
-          ))}
         </div>
       </div>
+
+      {/* 3. CENTER HERO STAGE: FULLY VISIBLE TYPOGRAPHY "PRAKASH" & "RAJENDRAN" */}
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 relative z-10 my-auto py-4 sm:py-8 flex flex-col justify-between min-h-[440px]">
+        
+        {/* TOP WORD: P R A K A S H */}
+        <div className="w-full flex items-center justify-between font-black tracking-tight text-white/95 text-4xl sm:text-7xl md:text-8xl lg:text-9xl uppercase font-sans drop-shadow-[0_5px_15px_rgba(0,0,0,0.9)]">
+          <span className="hover:text-cyan-400 transition-colors">P</span>
+          
+          <div className="flex flex-col items-center">
+            <span className="text-[9px] sm:text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/50 mb-1 backdrop-blur-md shadow-sm">
+              DEVELOPER
+            </span>
+            <span className="hover:text-cyan-400 transition-colors">R</span>
+          </div>
+
+          <span className="hover:text-cyan-400 transition-colors">A</span>
+          
+          <div className="flex flex-col items-center">
+            <span className="text-[9px] sm:text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-red-500/20 text-red-300 border border-red-400/50 mb-1 backdrop-blur-md shadow-sm">
+              ENGINEER
+            </span>
+            <span className="hover:text-red-400 transition-colors">K</span>
+          </div>
+
+          <span className="hover:text-cyan-400 transition-colors">A</span>
+          <span className="hover:text-cyan-400 transition-colors">S</span>
+          <span className="hover:text-cyan-400 transition-colors">H</span>
+        </div>
+
+        {/* Floating Persona Switcher in Center */}
+        <div className="w-full flex justify-center py-3 pointer-events-auto">
+          <div className="bg-slate-950/90 backdrop-blur-xl px-4 py-2 rounded-full border border-white/15 flex items-center gap-3 shadow-2xl">
+            <button
+              onClick={() => {
+                soundFx.playClick();
+                setActivePersona('cyber');
+              }}
+              className={`px-3.5 py-1 rounded-full text-xs font-mono font-bold transition-all ${
+                activePersona === 'cyber'
+                  ? 'bg-gradient-to-r from-red-500 to-amber-500 text-white shadow-lg shadow-red-500/40 scale-105'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              ⚡ CYBER VISOR MODE
+            </button>
+            <span className="text-slate-600">|</span>
+            <button
+              onClick={() => {
+                soundFx.playClick();
+                setActivePersona('executive');
+              }}
+              className={`px-3.5 py-1 rounded-full text-xs font-mono font-bold transition-all ${
+                activePersona === 'executive'
+                  ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 shadow-lg shadow-cyan-500/40 scale-105'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              👔 EXECUTIVE SUIT MODE
+            </button>
+          </div>
+        </div>
+
+        {/* BOTTOM WORD: R A J E N D R A N */}
+        <div className="w-full flex items-center justify-between font-black tracking-tight text-white/95 text-4xl sm:text-7xl md:text-8xl lg:text-9xl uppercase font-sans drop-shadow-[0_5px_15px_rgba(0,0,0,0.9)]">
+          <div className="flex flex-col items-center">
+            <span className="text-[9px] sm:text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/50 mb-1 backdrop-blur-md shadow-sm">
+              PROBLEM SOLVER
+            </span>
+            <span className="hover:text-amber-400 transition-colors">R</span>
+          </div>
+
+          <span className="hover:text-amber-400 transition-colors">A</span>
+          <span className="hover:text-amber-400 transition-colors">J</span>
+          <span className="hover:text-amber-400 transition-colors">E</span>
+
+          <div className="flex flex-col items-center">
+            <span className="text-[9px] sm:text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/50 mb-1 backdrop-blur-md shadow-sm">
+              INNOVATOR
+            </span>
+            <span className="hover:text-emerald-400 transition-colors">N</span>
+          </div>
+
+          <span className="hover:text-amber-400 transition-colors">D</span>
+          <span className="hover:text-amber-400 transition-colors">R</span>
+          <span className="hover:text-amber-400 transition-colors">A</span>
+          <span className="hover:text-amber-400 transition-colors">N</span>
+        </div>
+
+      </div>
+
+      {/* 4. BOTTOM HUD EVALUATION BAR & METRICS */}
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-8 relative z-20">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-3 border-t border-white/10">
+          
+          {/* Bottom Left: Tagline Banner */}
+          <div className="text-center md:text-left space-y-0.5">
+            <p className="text-xs sm:text-sm font-mono tracking-wider text-slate-300 font-bold uppercase">
+              BUILDING DIGITAL SOLUTIONS
+            </p>
+            <p className="text-sm sm:text-base font-mono tracking-wider font-extrabold text-white">
+              THAT CREATE <span className="text-red-500 font-black">REAL IMPACT.</span>
+            </p>
+          </div>
+
+          {/* Center: Connect & PDF Action Buttons */}
+          <div className="flex items-center gap-3">
+            <a
+              href="/Prakash_Rajendran_Resume.pdf"
+              download="Prakash_Rajendran_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => soundFx.playClick()}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-bold text-white bg-slate-900/90 border border-white/15 hover:border-cyan-400 hover:bg-slate-800 transition-all hover:scale-105 shadow-md cursor-pointer"
+            >
+              <FileText className="w-4 h-4 text-cyan-400" />
+              <span>DOWNLOAD RESUME (PDF)</span>
+            </a>
+
+            <a
+              href="#contact"
+              onClick={() => soundFx.playClick()}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-mono font-bold text-slate-950 bg-gradient-to-r from-red-500 via-amber-400 to-amber-500 hover:from-red-400 hover:to-amber-300 transition-all shadow-lg shadow-red-500/25 hover:scale-105 cursor-pointer"
+            >
+              <span>CONNECT DIRECTLY</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+
+          {/* Bottom Right: "8+ YEARS OF EXPERIENCE" HUD Card */}
+          <div className="relative px-6 py-2.5 rounded-2xl bg-slate-950/85 border border-cyan-400/50 backdrop-blur-xl shadow-xl shadow-cyan-500/10 text-center">
+            <div className="absolute -top-1 -left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-cyan-400" />
+            <div className="absolute -top-1 -right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-cyan-400" />
+            <div className="absolute -bottom-1 -left-1 w-2.5 h-2.5 border-b-2 border-l-2 border-cyan-400" />
+            <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-cyan-400" />
+
+            <div className="text-xl sm:text-2xl font-black font-mono text-cyan-400 leading-none">
+              8+ <span className="text-xs sm:text-sm font-bold text-slate-200">YEARS</span>
+            </div>
+            <div className="text-[10px] font-mono tracking-widest text-slate-400 uppercase mt-1 font-semibold">
+              OF CRE & AI EXPERIENCE
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </section>
   );
 }

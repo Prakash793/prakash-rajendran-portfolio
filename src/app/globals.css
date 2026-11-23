@@ -51,10 +51,48 @@ body {
 }
 
 .glass-card {
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(10, 16, 28, 0.45);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 
+    0 20px 40px -15px rgba(0, 0, 0, 0.7),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.glass-panel {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(4, 8, 18, 0.55);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 
+    0 30px 60px -12px rgba(0, 0, 0, 0.8),
+    0 18px 36px -18px rgba(0, 0, 0, 0.7),
+    inset 0 1px 2px rgba(255, 255, 255, 0.25),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.glass-panel-amber {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(245, 158, 11, 0.02) 100%), rgba(8, 12, 22, 0.55);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.8),
+    0 0 25px -5px rgba(245, 158, 11, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.25);
+}
+
+.glass-panel-cyan {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(6, 182, 212, 0.02) 100%), rgba(4, 10, 24, 0.55);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid rgba(6, 182, 212, 0.35);
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.8),
+    0 0 25px -5px rgba(6, 182, 212, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.25);
 }
 
 .glass-card-hover {
@@ -62,9 +100,9 @@ body {
 }
 
 .glass-card-hover:hover {
-  border-color: rgba(245, 158, 11, 0.3);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5), 0 0 20px -5px rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7), 0 0 25px -5px rgba(245, 158, 11, 0.25);
 }
 
 .gold-gradient-text {
@@ -100,5 +138,58 @@ body {
 
 .animate-marquee:hover {
   animation-play-state: paused;
+}
+
+/* Futuristic HUD & AI Scanner Visuals */
+.cyber-grid {
+  background-image: 
+    linear-gradient(to right, rgba(6, 182, 212, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.07) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.cyber-grid-dense {
+  background-image: 
+    linear-gradient(to right, rgba(245, 158, 11, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(245, 158, 11, 0.08) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(1000%);
+  }
+}
+
+.animate-scanline {
+  animation: scanline 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.neon-border-cyan {
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.2), inset 0 0 15px rgba(6, 182, 212, 0.1);
+}
+
+.neon-border-amber {
+  border-color: rgba(245, 158, 11, 0.6);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.25), inset 0 0 15px rgba(245, 158, 11, 0.1);
 }
 
