@@ -31,17 +31,49 @@ export default function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
+  const [dispatchChannel, setDispatchChannel] = useState<'email' | 'whatsapp'>('email');
+
   const handleCopy = (text: string, field: string) => {
     navigator.clipboard.writeText(text);
     setCopiedField(field);
     setTimeout(() => setCopiedField(null), 2500);
   };
 
+  const handleWhatsAppDirect = () => {
+    const text = encodeURIComponent(
+      `Hello Prakash, I am reaching out from your portfolio website.\n\nName: ${formData.name || 'Visitor'}\nTopic: ${formData.subject || 'Opportunity / Collaboration'}\n\nMessage: ${formData.message || 'I would like to discuss an opportunity with you.'}`
+    );
+    window.open(`https://wa.me/919677255475?text=${text}`, '_blank');
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate reliable dispatch
+    if (dispatchChannel === 'whatsapp') {
+      handleWhatsAppDirect();
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      try {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.7 },
+          colors: ['#22c55e', '#f59e0b', '#6366f1'],
+        });
+      } catch (err) {}
+      return;
+    }
+
+    // Default Email: open user's email client directly with pre-filled content to prakzsampath@gmail.com
+    const emailSubject = encodeURIComponent(`Portfolio Inquiry: [${formData.subject || 'Inquiry'}] from ${formData.name} (${formData.organization || 'General'})`);
+    const emailBody = encodeURIComponent(
+      `Hi Prakash,\n\nName: ${formData.name}\nEmail: ${formData.email}\nOrganization: ${formData.organization || 'N/A'}\nTopic: ${formData.subject}\n\nMessage:\n${formData.message}\n\n---\nSent from prakash-rajendran-portfolio`
+    );
+    
+    // Trigger mailto client
+    window.location.href = `mailto:${personalData.email}?subject=${emailSubject}&body=${emailBody}`;
+
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
@@ -57,7 +89,7 @@ export default function Contact() {
       } catch (err) {
         // graceful fallback if canvas blocked
       }
-    }, 1000);
+    }, 600);
   };
 
   return (
@@ -349,20 +381,60 @@ export default function Contact() {
                     />
                   </div>
 
+                  {/* Send Destination Selector */}
+                  <div className="p-3 rounded-xl bg-slate-900/90 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <span className="text-xs text-slate-400 font-medium">Transmit directly via:</span>
+                    <div className="grid grid-cols-2 gap-2 w-full sm:w-auto">
+                      <button
+                        type="button"
+                        onClick={() => setDispatchChannel('email')}
+                        className={`flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                          dispatchChannel === 'email'
+                            ? 'bg-amber-400 text-slate-950 shadow-sm shadow-amber-500/30'
+                            : 'bg-slate-800 text-slate-300 hover:text-white'
+                        }`}
+                      >
+                        <Mail className="w-3.5 h-3.5" />
+                        My Email App
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setDispatchChannel('whatsapp')}
+                        className={`flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                          dispatchChannel === 'whatsapp'
+                            ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/30'
+                            : 'bg-slate-800 text-slate-300 hover:text-white'
+                        }`}
+                      >
+                        <MessageSquare className="w-3.5 h-3.5 text-emerald-400" />
+                        WhatsApp
+                      </button>
+                    </div>
+                  </div>
+
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-sm font-bold text-slate-950 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-lg shadow-amber-500/25 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
+                    className={`w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-sm font-bold shadow-lg transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 ${
+                      dispatchChannel === 'whatsapp'
+                        ? 'bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white shadow-emerald-500/25'
+                        : 'bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 shadow-amber-500/25'
+                    }`}
                   >
                     {isSubmitting ? (
                       <span className="flex items-center gap-2">
-                        <span className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
-                        Transmitting...
+                        <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                        Routing Message...
                       </span>
+                    ) : dispatchChannel === 'whatsapp' ? (
+                      <>
+                        <MessageSquare className="w-4 h-4" />
+                        Open & Send in WhatsApp (+91 96772 55475)
+                      </>
                     ) : (
                       <>
                         <Send className="w-4 h-4" />
-                        Transmit Message to Prakash
+                        Transmit to prakzsampath@gmail.com
                       </>
                     )}
                   </button>
